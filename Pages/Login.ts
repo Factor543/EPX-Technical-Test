@@ -5,7 +5,7 @@ export class Login extends Locators {
 	readonly url: string;
 	constructor( page: Page) {
 		super(page);
-		this.url = 'https://app-stg.epxworldwide.com/log-in?redirectTo=/online?utm_source=chatgpt.com';
+		this.url = 'https://app-stg.epxworldwide.com/log-in';
 
 	}
 	async Login(credentials:{email: string, password: string}) {

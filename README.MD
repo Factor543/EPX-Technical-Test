@@ -19,7 +19,7 @@
 
 **📊 Reportes:**
 - [Reporte completo HTML](results/index.html)
-- [Carpeta de fallos](evidences/)
+- [Carpeta de fallos](evidence)
 
 [Detalles del analisis del caso C.A.R.L.](documentation/AI-assistance.md)
 

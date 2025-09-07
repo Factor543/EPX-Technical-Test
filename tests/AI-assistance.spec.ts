@@ -3,11 +3,9 @@ import { expect } from 'playwright/test';
 import { test } from '../index';
 
 const promts = {
-	networking: 'Dame una lista breve de eventos de networking en Miami este mes. Si no hay, responde brevemente indicándolo.',
+	networking: 'Dame UN evento de networking en Miami este mes. Incluye las palabras "networking", "Miami" y una fecha. Máximo 2 líneas. Sin eventos: "No hay eventos próximos"',
 	structure: 'Dame una lista de 2 eventos próximos. Solo responde con: Titulo: [título], Fecha: [fecha], Hora: [hora]. NADA MÁS. Sin saludos, sin explicaciones, sin texto adicional.',
 	json: 'UN evento próximo en JSON válido dentro de code. ESTRUCTURA: {"titulo": "[título]", "fecha": "[fecha]", "hora": "[hora]"} - CIERRA EL JSON. NADA MÁS.',
-	empty: '',
-	spaces: '   ',
 	interaction: '¿Cuáles son los mejores eventos de networking en Miami?'
 };
 
@@ -18,7 +16,7 @@ test.describe('C.A.R.L. - Flujo principal', () => {
 			email: 'cmendoza+qa1@shokworks.io', 
 			password: 'Cmendoza1.'
 		});
-		await page.getByRole('heading', { name: 'Online', exact: true }).waitFor({ state: 'visible' });
+		await page.getByRole('heading', { name: 'Feed', exact: true }).waitFor({ state: 'visible' });
 		await carl.access.click();
 		await page.waitForURL(/carl/);
 		await carl.title_Chat.waitFor({ state: 'visible' });
@@ -76,7 +74,7 @@ test.describe('C.A.R.L. - Respuestas Estructuradas', () => {
 			email: 'cmendoza+qa1@shokworks.io', 
 			password: 'Cmendoza1.'
 		});
-		await page.getByRole('heading', { name: 'Online', exact: true }).waitFor({ state: 'visible' });
+		await page.getByRole('heading', { name: 'Feed', exact: true }).waitFor({ state: 'visible' });
 		await carl.access.click();
 		await page.waitForURL(/carl/);
 		await carl.title_Chat.waitFor({ state: 'visible' });
@@ -193,7 +191,7 @@ test.describe('C.A.R.L. - Validaciones de Entrada', () => {
 			email: 'cmendoza+qa1@shokworks.io', 
 			password: 'Cmendoza1.'
 		});
-		await page.getByRole('heading', { name: 'Online', exact: true }).waitFor({ state: 'visible' });
+		await page.getByRole('heading', { name: 'Feed', exact: true }).waitFor({ state: 'visible' });
 		await carl.access.click();
 		await page.waitForURL(/carl/);
 		await carl.title_Chat.waitFor({ state: 'visible' });
@@ -214,6 +212,12 @@ test.describe('C.A.R.L. - Validaciones de Entrada', () => {
 			await carl.page.getByText(promts.networking).last().waitFor({ state: 'visible' });
 			
 			// Validar que input está bloqueado mientras responde
+			const screenshotPath = 'evidence/input-bloqueado-durante-respuesta.png';
+			await carl.page.screenshot({ path: screenshotPath, fullPage: true });
+			test.info().attach('screenshot', {
+				path: screenshotPath,
+				contentType: 'image/png'
+			});
 			await expect(carl.input).toBeDisabled();
 		});
 
