@@ -2,30 +2,33 @@ import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
 	testDir: './tests',
-	fullyParallel: true,
+	fullyParallel: false,
 	forbidOnly: !!process.env.CI,
-	retries: process.env.CI ? 2 : 0,
+	retries: 1,
 	workers: process.env.CI ? 1 : undefined,
-	reporter: 'html',
+	outputDir: './evidence',
+	
+	reporter: [
+		['html', {
+			outputFolder: 'results',
+			open: 'never'
+		}]
+	],
+	
 	use: {
-		// baseURL: 'http://localhost:3000',
 		trace: 'on-first-retry',
+		headless: false,
+		screenshot: 'on',
+		video: 'on',
+		// launchOptions: {
+		// 	slowMo: 500,
+		// },
 	},
 
-  	projects: [
+	projects: [
 		{
 			name: 'chromium',
 			use: { ...devices['Desktop Chrome'] },
-		},
-
-		{
-			name: 'firefox',
-			use: { ...devices['Desktop Firefox'] },
-		},
-
-		{
-			name: 'webkit',
-			use: { ...devices['Desktop Safari'] },
 		},
 	]
 });
