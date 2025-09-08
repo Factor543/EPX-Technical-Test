@@ -1,46 +1,76 @@
-## Caso 1: C.A.R.L. – Asistente de IA
+## Caso 1: C.A.R.L. - Asistente de IA
 
-### Objetivo
-Validar que, independientemente de las respuestas de la IA, el flujo de conversación con C.A.R.L. se ejecuta completo, procesando entradas y entregando salidas sin errores técnicos ni interrupciones.
+### Objetivo:
+Validar que C.A.R.L. procese inputs y entregue outputs sin errores técnicos, cumpliendo con estructuras esperadas y coherencia en respuestas.
 
-### Observaciones del análisis
-- Tras enviar un mensaje, aparece un indicador de carga y el campo de texto queda bloqueado hasta que termina la respuesta.
-- No se permite enviar mensajes vacíos
-- Cuando se solicita información (ej: sobre networking), la respuesta contiene texto relacionado con el tema.
-- La salida puede variar; a veces es texto libre y otras puede estructurarse en el PROMPT.
+### Análisis:
+**Funciona:**
+- Flujo básico de pregunta-respuesta (después de solución temporal)
+- Bloqueo de input durante respuesta
+- Limpieza de contexto entre conversaciones
+- Respuestas estructuradas (con formato específico)
 
-### Criterios de validación
-- Flujo:
-  - Se pueden enviar preguntas y recibir respuestas hasta completar el flujo, sin errores visibles.
-  - El input permanece bloqueado mientras C.A.R.L. responde y se habilita al finalizar.
-- Contenido:
-  - Respuesta no vacía.
-  - Si se solicitó estructura (JSON o Secciones de separacion) es válida.
-  - Texto con frases completas y palabras relacionadas con el tema del prompt (ej “networking”, “eventos”, “<ciudad>”).
+**NO funciona:**
+- Primer mensaje en conversaciones nuevas (error sistemático)
+- Generación de JSON incompleto (falta llave de cierre)
+- Respuestas incoherentes en algunos casos
 
-### Casos de prueba
-- Flujo principal (Happy Path):
-  - Preguntar por eventos de networking en una ciudad este mes; verificar bloqueo del input durante la respuesta y que se recibe una respuesta relacionada y no vacia o con texto de otro tema
+**Parcialmente funciona:**
+- Respuestas estructuradas (solo después de interacción previa)
 
-- Respuesta con estructura:
-  - Solicitar la respuesta con un formato ( titulo, fecha, lugar)
-  - Solicitar la respuesta en formato JSON
-  
-- Interacción seguida:
-  - Intentar enviar otra pregunta mientras sigue la respuesta; confirmar que el input permanece bloqueado.
+### Criterios a Evaluar:
+1. **Flujo técnico**: Sin errores de conexión o timeouts
+2. **Contenido**: Respuesta no vacía y relevante al prompt
+3. **Estructura**: Formato correcto cuando se solicita (JSON, listas)
+4. **UX**: Input bloqueado durante respuesta, habilitado al finalizar
 
-### Viabilidad de automatización
-- Alta: se puede automatizar el flujo y las validaciones anteriores.
+### Casos de Prueba:
+- ✅ Pregunta sobre networking (falla por error del primer mensaje)
+- ✅ Respuesta estructurada (funciona con solución temporal)
+- ✅ Validación de JSON (falla por error de formato)
+- ✅ Bloqueo de input (funciona correctamente)
 
-### Enfoques
-- Con Playwright:
-  - Navegar a C.A.R.L., enviar prompts del script, esperar la respuesta, verificar bloqueo del input y validar que la salida cumple (no vacía, estructura si aplica, palabras relevantes).
+### Viabilidad de Automatización:
+**ALTA** - A pesar de los errores, el flujo es predecible y automatizable.
 
-- Alternativa low/no‑code:
-  - Grabar la interacción (enviar pregunta y revisar respuesta) y añadir checks básicos de contenido (no vacío, palabras clave).
+**Justificación:**
+- Los errores son sistemáticos y detectables
+- El flujo básico funciona consistentemente
+- Las validaciones son claras y medibles
+- Las soluciones temporales son efectivas
 
-### Evidencias centralizadas
-- Ver `README.MD` → Evidencias:
-  - Reporte HTML: `playwright-report/index.html`
-  - Capturas: `test-results/`
-  - Video (si aplica): `test-results/`
+### Enfoques con Herramientas:
+
+#### Playwright:
+**¿Por qué es la mejor opción?**
+
+**Ventajas específicas para este caso:**
+- **Manejo de errores sistemáticos**: Puede implementar soluciones específicas
+- **Validaciones de contenido**: Verificaciones precisas para texto y estructura
+- **Control de tiempos**: Crítico para respuestas de IA que pueden tardar
+- **Reportes detallados**: Evidencias claras de errores para el equipo de desarrollo
+
+**Comparación con alternativas:**
+- **Low-code (Playwright Codegen)**: No puede manejar soluciones complejas
+- **No-code (Katalon)**: Limitado para validaciones de contenido de IA
+- **Selenium**: Menos robusto para aplicaciones modernas
+
+#### Alternativas Low-Code:
+**Limitaciones para este caso:**
+- Validaciones de IA requieren precisión
+- Errores sistemáticos necesitan manejo específico
+- Menos control sobre tiempos críticos
+
+### Evidencias:
+- **Reportes HTML**: `results/index.html`
+- **Screenshots de errores**: `evidence/`
+- **Videos de ejecución**: `evidence/`
+- **Traces para debugging**: `evidence/`
+
+### Recomendaciones para el Equipo de Desarrollo:
+1. **Error del primer mensaje**: Revisar inicialización del chatbot
+2. **JSON incompleto**: Verificar procesamiento de respuestas de IA
+3. **Tiempos de respuesta**: Optimizar velocidad de respuesta
+
+### Impedimentos
+- **Errores sistemáticos**: Afectan la validez de algunos tests Y fuerzan las soluciones temporales

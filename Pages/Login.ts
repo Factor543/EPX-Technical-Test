@@ -1,11 +1,16 @@
-import { Page } from "playwright-core";
+import { Locator, Page } from "playwright-core";
 import Locators from "../selectors";
 
 export class Login extends Locators {
-	readonly url: string;
+	readonly base_url: string;
+	readonly events_url: string;
+	readonly principal_text: Locator;
+	
 	constructor( page: Page) {
 		super(page);
-		this.url = 'https://app-stg.epxworldwide.com/log-in';
+		this.base_url = 'https://app-stg.epxworldwide.com/log-in';
+		this.events_url ='https://app-stg.epxworldwide.com/online';
+		this.principal_text = this.page.getByRole('heading', { name: 'Feed', exact: true });
 
 	}
 	async Login(credentials:{email: string, password: string}) {

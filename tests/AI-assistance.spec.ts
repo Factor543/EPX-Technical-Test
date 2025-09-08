@@ -11,12 +11,12 @@ const promts = {
 
 test.describe('C.A.R.L. - Flujo principal', () => {
 	test.beforeEach(async ({ page, login, carl }) => {
-		await page.goto(login.url, { waitUntil: 'domcontentloaded' });
+		await page.goto(login.base_url, { waitUntil: 'domcontentloaded' });
 		await login.Login({
 			email: 'cmendoza+qa1@shokworks.io', 
 			password: 'Cmendoza1.'
 		});
-		await page.getByRole('heading', { name: 'Feed', exact: true }).waitFor({ state: 'visible' });
+		await login.principal_text.waitFor({ state: 'visible' });
 		await carl.access.click();
 		await page.waitForURL(/carl/);
 		await carl.title_Chat.waitFor({ state: 'visible' });
@@ -69,7 +69,7 @@ test.describe('C.A.R.L. - Flujo principal', () => {
 
 test.describe('C.A.R.L. - Respuestas Estructuradas', () => {
 	test.beforeEach(async ({ page, login, carl }) => {
-		await page.goto(login.url, { waitUntil: 'domcontentloaded' });
+		await page.goto(login.base_url, { waitUntil: 'domcontentloaded' });
 		await login.Login({
 			email: 'cmendoza+qa1@shokworks.io', 
 			password: 'Cmendoza1.'
@@ -106,24 +106,22 @@ test.describe('C.A.R.L. - Respuestas Estructuradas', () => {
 		await test.step('Validar respuesta estructurada', async () => {
 			await carl.page.waitForTimeout(3_000);
 			
-			// Verificar que C.A.R.L. respondió
 			await expect(carl.carl_response, 'C.A.R.L. no respondió después de 3s').toBeVisible();
 			
-			// Capturar TODO el texto de la respuesta
 			const fullResponseText = await carl.carl_response.textContent();
 			expect(fullResponseText, 'C.A.R.L. no respondió').not.toBe('');
 			
-			// Validar que siguió el formato específico solicitado
 			await expect(carl.carl_response).toContainText(/titulo:/i);
 			await expect(carl.carl_response).toContainText(/fecha:/i);
 			await expect(carl.carl_response).toContainText(/hora:/i);
 			
-			// Validar que contiene al menos 2 eventos (como se solicitó)
 			const tituloCount = (fullResponseText?.match(/titulo:/gi) || []).length;
 			expect(tituloCount, 'C.A.R.L. no respondió con formato "Titulo:", "Fecha:" y "Hora:"').toBeGreaterThanOrEqual(2);
 			
-			// Validar que no contiene texto extra como saludos o explicaciones
-			await expect(carl.carl_response).not.toContainText(/Hola|Carla|tienes|ideal|gran/i);
+			await expect(carl.carl_response,
+				`C.A.R.L. contiene texto extra como saludos o explicaciones, justo como el promt dice que no debe tener: 
+				prompt: ${promts.structure}`
+			).not.toContainText(/Hola|Carla|tienes|ideal|gran/i);
 		});
 	});
 
@@ -152,20 +150,20 @@ test.describe('C.A.R.L. - Respuestas Estructuradas', () => {
 			const responseExists = await carl.carl_response.isVisible();
 			
 			if (responseExists) {
-				// Captura específicamente el contenido de <code>
 				const codeContent = await carl.carl_response.locator('code').textContent();
 				
 				expect(codeContent, 'C.A.R.L. no respondió').not.toBe('');
 				
-				// Validar que contiene estructura JSON válida
 				expect(codeContent, 'JSON debe tener llave de apertura').toContain('{');
 				expect(codeContent, 'JSON debe contener campo titulo').toContain('titulo');
 				expect(codeContent, 'JSON debe contener campo fecha').toContain('fecha');
 				expect(codeContent, 'JSON debe contener campo hora').toContain('hora');
 				expect(codeContent, 'JSON debe tener llave de cierre').toContain('}');
 				
-				// Validar que no contiene texto extra como saludos o explicaciones
-				await expect(carl.carl_response).not.toContainText(/Hola|Carla|solicitaste|valido|gran/i);
+				await expect(carl.carl_response,
+					`C.A.R.L. contiene texto extra como saludos o explicaciones, justo como el promt dice que no debe tener: 
+					prompt: ${promts.json}`
+				).not.toContainText(/Hola|Carla|tienes|ideal|gran/i);
 			} else {
 				throw new Error(`C.A.R.L. no respondió después de 3s. Prompt enviado: "${promts.json}". Verificar conectividad o estado del servicio.`);
 			}
@@ -186,7 +184,7 @@ test.describe('C.A.R.L. - Respuestas Estructuradas', () => {
 
 test.describe('C.A.R.L. - Validaciones de Entrada', () => {
 	test.beforeEach(async ({ page, login, carl }) => {
-		await page.goto(login.url, { waitUntil: 'domcontentloaded' });
+		await page.goto(login.base_url, { waitUntil: 'domcontentloaded' });
 		await login.Login({
 			email: 'cmendoza+qa1@shokworks.io', 
 			password: 'Cmendoza1.'
@@ -211,7 +209,6 @@ test.describe('C.A.R.L. - Validaciones de Entrada', () => {
 			await carl.sendPrompt.click();
 			await carl.page.getByText(promts.networking).last().waitFor({ state: 'visible' });
 			
-			// Validar que input está bloqueado mientras responde
 			const screenshotPath = 'evidence/input-bloqueado-durante-respuesta.png';
 			await carl.page.screenshot({ path: screenshotPath, fullPage: true });
 			test.info().attach('screenshot', {
@@ -222,7 +219,6 @@ test.describe('C.A.R.L. - Validaciones de Entrada', () => {
 		});
 
 		await test.step('Esperar respuesta y validar que input se habilita', async () => {
-			// Esperar que termine y se habilite
 			await carl.waitForResponseComplete();
 			await expect(carl.input).toBeEnabled();
 		});

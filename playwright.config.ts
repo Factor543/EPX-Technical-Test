@@ -5,13 +5,13 @@ export default defineConfig({
 	fullyParallel: false,
 	forbidOnly: !!process.env.CI,
 	retries: 1,
-	workers: process.env.CI ? 1 : undefined,
+	workers: 1,
 	outputDir: './evidence',
 	
 	reporter: [
 		['html', {
 			outputFolder: 'results',
-			open: 'never'
+			open: 'always'
 		}]
 	],
 	
@@ -20,8 +20,9 @@ export default defineConfig({
 		headless: false,
 		screenshot: 'on',
 		video: 'on',
+		// Habilitar para que las pruebas se ejecuten mas lento
 		// launchOptions: {
-		// 	slowMo: 500,
+		// 	slowMo: 600,
 		// },
 	},
 
@@ -30,5 +31,17 @@ export default defineConfig({
 			name: 'chromium',
 			use: { ...devices['Desktop Chrome'] },
 		},
+		// {
+		// 	name: 'firefox',
+		// 	use: { ...devices['Desktop Firefox'] },
+		// },
+		// {
+		// 	name: 'edge',
+		// 	use: { ...devices['Desktop Edge'] },
+		// },
+		// {
+		// 	name: 'chrome',
+		// 	use: { ...devices['Desktop Chrome'] },
+		// }
 	]
 });
