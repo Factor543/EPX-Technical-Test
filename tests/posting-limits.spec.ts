@@ -17,7 +17,7 @@ const data_event:EventData = {
 };
 
 const credentials = {
-	email: 'cmendoza+qa1@shokworks.io',
+	email: 'cmendoza+qa3@shokworks.io',
 	password: 'Cmendoza1.'
 };
 
