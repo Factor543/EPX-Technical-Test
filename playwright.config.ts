@@ -17,7 +17,7 @@ export default defineConfig({
 	
 	use: {
 		trace: 'on-first-retry',
-		headless: false,
+		// headless: false, --- descomentar si se quiere ver la ejecucion en el navegador
 		screenshot: 'on',
 		video: 'on',
 		// Habilitar para que las pruebas se ejecuten mas lento
