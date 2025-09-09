@@ -1,6 +1,6 @@
 import { Locator, Page } from "playwright-core";
 
-export default class Buttons {
+export default class Fields {
 	readonly Email: Locator;
 	readonly Password: Locator;
 

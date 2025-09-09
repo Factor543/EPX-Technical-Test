@@ -35,13 +35,16 @@ export class Posting extends Locators {
 	readonly create_event_button: Locator;
 	readonly modal_container: Locator;
 	readonly form_event: Record<string, Locator>;
+	readonly get_advice_access: Locator;
+	readonly form_advice: Record<string, Locator>;
 
 	constructor( page: Page) {
 		super(page);
 		this.principaltext = this.page.getByRole('heading', { name: 'Online', exact: true });
 		this.create_event_button = this.page.getByRole('button',{name:'Create an event'}).last();
-		
+		this.get_advice_access = this.page.locator('a').filter({ hasText: 'Get Advice' });
 		this.modal_container = this.page.getByRole('dialog');
+
 		this.Modal_Posting = {
 			title: this.modal_container.getByRole('heading', { name: 'Create an Event!', exact: true }),
 			description: this.page.getByText('Select the type of event you want to publish.'),
@@ -49,6 +52,16 @@ export class Posting extends Locators {
 			paid_event_option: this.modal_container.locator('label').filter({ hasText: 'Pay to Attend' }),
 			continuebutton: this.modal_container.locator(this.Buttons.continue),
 			X_button: this.modal_container.locator(' h1 svg').last()
+		};
+
+		this.form_advice = {
+			title: this.page.getByRole('heading', { name: 'Get Expert Advice' }),
+			ai_skill: this.page.getByText('AI', { exact: true }),
+			description: this.page.getByLabel('rdw-wrapper').locator('div').filter({ hasText: 'Write 4 sentences describing' }).first().getByRole('textbox'),
+			way_to_go: this.page.getByRole('heading', { name: 'Way to Go!' }),
+			give_advice: this.page.getByRole('heading', { name: 'Give Advice', exact: true }),
+			my_requests: this.page.getByRole('tablist').filter({ hasText: 'My Requests' }),
+			my_requests_description: this.page.locator('.p-6'),
 		};
 		
 		this.Messages = {
@@ -61,6 +74,7 @@ export class Posting extends Locators {
 			pay_to_play_option: this.modal_container.locator('span').filter({ hasText: 'Pay to Play.' }),
 			upgrade_close_button: this.modal_container.locator('h1 svg').first()
 		};
+
 		this.form_event = {
 			title: this.page.getByRole('heading', { name: 'Host an Online Event' }),
 			image_upload: this.page.locator('#image'),
@@ -99,6 +113,7 @@ export class Posting extends Locators {
 			co_owners: this.page.locator('.ant-select-selector'),
 			price_per_person: this.page.getByRole('spinbutton', { name: 'Price per person (USD) *' })
 		};
+
 	}
 	/**
 	 * Método principal para llenar todo el formulario de creación de eventos

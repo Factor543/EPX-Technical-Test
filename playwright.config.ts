@@ -16,8 +16,8 @@ export default defineConfig({
 	],
 	
 	use: {
-		trace: 'on-first-retry',
-		// headless: false, --- descomentar si se quiere ver la ejecucion en el navegador
+		trace: 'on',
+		// headless: false, //--- descomentar si se quiere ver la ejecucion en el navegador>
 		screenshot: 'on',
 		video: 'on',
 		// Habilitar para que las pruebas se ejecuten mas lento
@@ -31,10 +31,10 @@ export default defineConfig({
 			name: 'chromium',
 			use: { ...devices['Desktop Chrome'] },
 		},
-		// {
-		// 	name: 'firefox',
-		// 	use: { ...devices['Desktop Firefox'] },
-		// },
+		{
+			name: 'firefox',
+			use: { ...devices['Desktop Firefox'] },
+		},
 		// {
 		// 	name: 'edge',
 		// 	use: { ...devices['Desktop Edge'] },

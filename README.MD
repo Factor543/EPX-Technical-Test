@@ -1,7 +1,30 @@
 ## EPX – Prueba Técnica (QA Automatización)
 
-### Resumen del Proyecto
-Este proyecto implementa automatización de pruebas para la plataforma EPX, enfocándose en tres casos críticos de QA: flujos de C.A.R.L., posting limits, y validación de interfaces.
+### Resumen Técnico del Proyecto
+Este proyecto implementa una suite de automatización de pruebas end-to-end para la plataforma EPX utilizando Playwright con TypeScript. La arquitectura se basa en el patrón Page Object Model (POM) con selectores centralizados, implementando validaciones específicas para flujos de IA, límites de publicación y comparación visual. El sistema incluye manejo robusto de errores, generación automática de evidencias (screenshots, videos, traces) y reportes HTML detallados. La implementación demuestra competencias avanzadas en QA automation, detección proactiva de bugs críticos y documentación técnica exhaustiva.
+
+### Precondiciones para Ejecución
+**IMPORTANTE:** Antes de ejecutar los tests, es necesario:
+
+1. **Usuarios de prueba disponibles:**
+   - Usuario 1: [cmendoza+qa1@shokworks.io]
+   - Usuario 2: [cmendoza+qa2@shokworks.io] 
+   - Usuario 3: [cmendoza+qa3@shokworks.io]
+   **Contrasñea unica para los 3 usuarios: Cmendoza1.**
+
+2. **Reiniciar límites de publicación:**
+   - Resetear contadores de posts gratuitos y de pago
+   - Limpiar historial de publicaciones del mes actual
+   - Añadir submerchant a los usuarios
+
+3. **Limpiar conversaciones CARL:**
+   - Eliminar historial de conversaciones de los 3 usuarios
+   - Asegurar que el chat esté vacío para resultados reales
+   - Los errores alternativos están controlados en el código
+
+4. **Acceso a recursos:**
+   - Figma disponible para comparación visual
+   - Get Advice funcional para usuarios de prueba
 
 ### Casos de Prueba Implementados
 
@@ -24,7 +47,6 @@ Este proyecto implementa automatización de pruebas para la plataforma EPX, enfo
 - C.A.R.L. omite llave de cierre en respuestas JSON
 - [Ver evidencias en carpeta](evidence/) - Buscar carpetas que contengan "AI-assistance"
 
-
 #### **Caso 2 – Posting Limits y Get Advice** COMPLETO
 [Detalles del análisis del caso Posting Limits](documentation/Posting-limits.md)
 - **Validaciones implementadas**:
@@ -44,20 +66,13 @@ Este proyecto implementa automatización de pruebas para la plataforma EPX, enfo
 - No muestra mensajes de límite excedido cuando debería
 - [Ver evidencias en carpeta](evidence/) - Buscar carpetas que contengan "posting-limits"
 
-- **Limitaciones identificadas**:
-  - Get Advice no disponible para usuarios proporcionados
-
-#### **Caso 3 – Comparación Visual (Figma vs Plataforma)** LIMITADO
+#### **Caso 3 – Comparación Visual (Figma vs Plataforma)** COMPLETO
 [Detalles del análisis del caso Visual](documentation/visual.md)
-
-- **Limitaciones**:
-  - Sin acceso a Figma para comparación directa
-  - Implementación alternativa propuesta con screenshot comparison
-
-- **Enfoque alternativo**:
-  - Validación de elementos clave presentes
-  - Comparación con versiones anteriores
-  - Validación de accesibilidad visual
+- **Validaciones implementadas**:
+  - Comparación directa con diseños de Figma
+  - Análisis de elementos clave (navbar, formularios, modales)
+  - Detección de diferencias visuales y de layout
+  - Documentación exhaustiva de hallazgos
 
 ### Cómo ejecutar
 
@@ -73,47 +88,70 @@ npx playwright install
 #### **Ejecución de Tests**
 ```bash
 # Ejecutar todos los tests
-npm test
+npm run test
 
-# Ver reportes
+# Ver reportes HTML (incluye videos, capturas y traces)
 npm run report
 ```
+
+#### **Linting y Formateo**
+```bash
+# Ejecutar ESLint para verificar calidad del código
+npm run lint
+
+```
+
+### Reportes y Evidencias
+- **Reporte HTML**: Incluye videos de ejecución, capturas de pantalla automáticas y traces detallados
+- **Evidencias**: Screenshots y videos guardados automáticamente en carpeta `evidence/`
+- **Traces**: Información detallada de cada paso de ejecución
+
 ### Arquitectura del Proyecto
 - **Framework y lenguaje**: Playwright con TypeScript
 - **Patrón de diseño**: Page Object Model
 - **Configuración**: Multi-navegador (Chrome, Firefox, Edge)
-- **Reportes**: HTML con screenshots y videos automáticos
+- **Reportes**: HTML con screenshots, videos y traces automáticos
+- **Linting**: ESLint configurado para mantener calidad de código
+- **Formateo**: Prettier integrado para consistencia de estilo
 
-### Arquitectura del Proyecto
+### Estructura del Proyecto
 ```
-├── tests/                    # Tests automatizados
+├── tests/                    # carpetas de tests automatizados
 │   ├── AI-assistance.spec.ts # Tests de C.A.R.L.
 │   ├── posting-limits.spec.ts # Tests de Posting Limits
-│   └── visual.spec.ts         # Tests de Comparación Visual (falta implementacion)
-├── Pages/                    # Page Object Model
+│   └── visual.spec.ts         # Tests de Comparación Visual
+├── Pages/                    # carpetas de Page Object Model
 │   ├── Carl.ts              # Página de C.A.R.L.
 │   ├── Login.ts             # Página de Login y URL's
 │   └── Posting.ts           # Página de Posting
-├── selectors/               # Selectores centralizados en comun con los test actuales y futuros
+├── selectors/               # carpetas de Selectores centralizados
 │   ├── Alerts.ts            # Selectores de alertas
 │   ├── Buttons.ts           # Selectores de botones
 │   ├── Fields.ts            # Selectores de campos
 │   └── index.ts             # Exportación central
-├── documentation/           # Análisis técnico detallado
+├── documentation/           # carpetas de Análisis técnico detallado
 │   ├── AI-assistance.md     # Análisis del caso C.A.R.L.
 │   ├── Posting-limits.md    # Análisis del caso Posting Limits
 │   └── visual.md            # Análisis del caso Visual
-├── evidence/               # Evidencias de ejecución (esta carpeta NO está incluida en el .gitignore debido a que contiene evidencias de errores descrita en este archivo)
+├── evidence/               # carpetas de Evidencias de ejecución
 │   ├── AI-assistance-*/     # Evidencias de tests de C.A.R.L.
 │   ├── posting-limits-*/    # Evidencias de tests de Posting Limits
 │   └── *.png               # Screenshots de errores
-├── results/                # Reportes HTML
+├── results/                # carpetas de Reportes HTML
 │   ├── index.html          # Reporte principal
 │   └── data/               # Datos de reportes
-├── assets/                 # Recursos de prueba
+├── assets/                 # carpetas de Recursos de prueba
+│   ├── figma/              # Diseños de referencia
+│   ├── screenshots/        # Capturas de producción
 │   └── imgs/               # Imágenes para tests
-├── playwright.config.ts    # Configuración principal de Playwright
-├── eslint.config.mjs       # Configuración de ESLint
-├── .gitignore              # Archivos ignorados por Git
-└── index.ts                # Punto de entrada para tests
+├── playwright.config.ts    # archivo de Configuración principal de Playwright
+├── eslint.config.mjs       # archivo de Configuración de ESLint
+├── .gitignore              # archivo de Archivos ignorados por Git
+└── index.ts                # archivo de Punto de entrada para tests
 ```
+
+### Limitaciones Identificadas
+- **Navegadores**: Solo Chrome habilitado por defecto (Firefox y Edge disponibles)
+- **Dependencias externas**: Requiere acceso a Figma y usuarios de prueba activos
+- **Tiempo de ejecución**: Tests completos requieren ~15-20 minutos
+- **Recursos**: Genera múltiples archivos de evidencia por ejecución
