@@ -19,7 +19,8 @@
     "test": "tests"
   },
   "scripts":{
-    "test": "npx eslint . && npx playwright test",
+    "lint": "npx eslint .",
+    "test": "npm run lint && npx playwright test",
     "report": "npx playwright show-report results"
   },
   "dependencies": {

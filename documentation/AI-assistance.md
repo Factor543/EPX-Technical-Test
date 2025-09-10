@@ -13,7 +13,6 @@ Verificar que C.A.R.L. reciba correctamente las preguntas y devuelva respuestas 
 **NO funciona:**
 - Primer mensaje en conversaciones nuevas (falla de forma constante)
 - Generación de JSON incompleto (falta llave de cierre)
-- Respuestas incoherentes en ciertos casos
 
 **Parcialmente funciona:**
 - Respuestas con formato correcto (solo después de una interacción previa)
@@ -70,7 +69,6 @@ Verificar que C.A.R.L. reciba correctamente las preguntas y devuelva respuestas 
 ### Recomendaciones para el Equipo de Desarrollo:
 1. **Error del primer mensaje**: revisar la inicialización del chatbot
 2. **JSON incompleto**: verificar el procesamiento de las respuestas de IA
-3. **Tiempos de respuesta**: optimizar la velocidad de generación
 
 ### Impedimentos:
-- **Errores repetitivos**: afectan la validez de algunas pruebas y obligan a aplicar ajustes temporales
+- **Errores repetitivos**: afectan las validaciones de algunas pruebas y obligan a aplicar ajustes temporales
