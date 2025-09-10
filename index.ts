@@ -1,6 +1,6 @@
 import { test as base } from '@playwright/test';
 import selectors from './selectors';
-import { Carl } from './Pages/CARL';
+import { Carl } from './Pages/Carl';
 import { Login } from './Pages/Login';
 import { Posting } from './Pages/Posting';
 

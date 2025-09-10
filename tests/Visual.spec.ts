@@ -29,7 +29,6 @@ test.describe('Visual Capture - Figma vs Production', () => {
 		});
 
 		await test.step('Capturar screenshot del chat completo', async () => {
-			await page.waitForTimeout(3000);
 			await page.screenshot({ 
 				path: `${screenshotPath}CARL-chat-production.png`,
 				fullPage: true,
@@ -46,7 +45,6 @@ test.describe('Visual Capture - Figma vs Production', () => {
 		});
 
 		await test.step('Capturar screenshot del navbar', async () => {
-			await page.waitForTimeout(3000);
 			await page.locator('#main div').filter({ hasText: 'HomeAchieveExploreImproveConnectOnlineVaultTribesFutureForward™️Carl chatCarl' }).nth(1).screenshot({
 				path: `${screenshotPath}CARL-navbar-production.png`,
 			});
@@ -73,7 +71,6 @@ test.describe('Visual Capture - Figma vs Production', () => {
 		});
 
 		await test.step('Capturar screenshot de la modal EPX+', async () => {
-			await page.waitForTimeout(1500);
 			await page.screenshot({ 
 				path: `${screenshotPath}Modal-EPX-production.png`,
 				fullPage: false,
@@ -105,7 +102,6 @@ test.describe('Visual Capture - Figma vs Production', () => {
 		});
 
 		await test.step('Capturar screenshot del formulario completo', async () => {
-			await page.waitForTimeout(1500);
 			await page.screenshot({ 
 				path: `${screenshotPath}event-form-production.png`,
 				fullPage: true,

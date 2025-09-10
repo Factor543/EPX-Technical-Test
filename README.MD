@@ -1,16 +1,48 @@
 ## EPX – Prueba Técnica (QA Automatización)
 
+---
+**************************************************************IMPORTANTE**********************************************************
+
+**ASPECTOS OMITIDOS INTENCIONALMENTE POR PRACTICIDAD Y PROPÓSITO DE LAS PRUEBAS**
+
+**1. VARIABLES DE ENTORNO - OMITIDAS POR PRÁCTICIDAD**
+- Las credenciales están hardcodeadas directamente en el código
+- Razón: Prácticidad y propósito de las pruebas
+
+**2. MULTI-NAVEGADOR - SOLO CHROMIUM POR EFICIENCIA**  
+- Solo se ejecuta en Chromium (Chrome)
+- Firefox y Edge están deshabilitados en playwright.config.ts
+- Razón: Prácticidad y propósito de las pruebas
+- En producción se implementarían todos los navegadores y responsive design
+
+**3. RESULTADOS DE EJECUCIÓN - SUBIDOS AL REPOSITORIO INTENCIONALMENTE**
+- Los archivos de evidence/ y results/ están incluidos en el repositorio
+- Contiene videos, screenshots, traces y reportes HTML de las ejecuciones
+- Razón: Las referencias en este README apuntan a archivos internos de esas carpetas
+- No subirlos dañaría la documentación y redirecciones del proyecto
+- En producción estos archivos se excluirían en el archivo .gitignore del repositorio
+- *****Puede afectar el tiempo de clonación debido al tamaño de videos y metadatos*****
+
+**4. WAITFOR TIMEOUTS - COLOCADOS ESTRATÉGICAMENTE**
+- Se utilizan page.waitForTimeout() en puntos específicos del código
+- Razón: Controlar comportamientos asíncronos y dar tiempo a respuestas de IA
+- Necesarios para estabilizar tests en entornos de staging con latencia variable
+- En producción se optimizarían con waits más específicos (waitForSelector, waitForResponse)
+- Los timeouts están colocados estratégicamente, no son aleatorios, ni por no seguir 
+---
+
 ### Resumen Técnico del Proyecto
 Este proyecto implementa una suite de automatización de pruebas end-to-end para la plataforma EPX utilizando Playwright con TypeScript. La arquitectura se basa en el patrón Page Object Model (POM) con selectores centralizados, implementando validaciones específicas para flujos de IA, límites de publicación y comparación visual. El sistema incluye manejo robusto de errores, generación automática de evidencias (screenshots, videos, traces) y reportes HTML detallados. La implementación demuestra competencias avanzadas en QA automation, detección proactiva de bugs críticos y documentación técnica exhaustiva.
 
 ### Precondiciones para Ejecución
-**IMPORTANTE:** Antes de ejecutar los tests, es necesario:
+
+*****************PASOS A SEGUIR ANTES DE EJECUTAR LOS TESTS*****************
 
 1. **Usuarios de prueba disponibles:**
    - Usuario 1: [cmendoza+qa1@shokworks.io]
    - Usuario 2: [cmendoza+qa2@shokworks.io] 
    - Usuario 3: [cmendoza+qa3@shokworks.io]
-   - Contrasñea unica para los 3 usuarios: Cmendoza1.
+   - Contraseña unica para los 3 usuarios: Cmendoza1.
 
 2. **Reiniciar límites de publicación:**
    - Resetear contadores de posts gratuitos y de pago
@@ -21,10 +53,6 @@ Este proyecto implementa una suite de automatización de pruebas end-to-end para
    - Eliminar historial de conversaciones de los 3 usuarios
    - Asegurar que el chat esté vacío para resultados reales
    - Los errores alternativos están controlados en el código
-
-4. **Acceso a recursos:**
-   - Figma disponible para comparación visual
-   - Get Advice funcional para usuarios de prueba
 
 ### Casos de Prueba Implementados
 
@@ -109,10 +137,8 @@ npm run lint
 ### Arquitectura del Proyecto
 - **Framework y lenguaje**: Playwright con TypeScript
 - **Patrón de diseño**: Page Object Model
-- **Configuración**: Multi-navegador (Chrome, Firefox, Edge)
 - **Reportes**: HTML con screenshots, videos y traces automáticos
 - **Linting**: ESLint configurado para mantener calidad de código
-- **Formateo**: Prettier integrado para consistencia de estilo
 
 ### Estructura del Proyecto
 ```
@@ -150,8 +176,3 @@ npm run lint
 └── index.ts                # archivo de Punto de entrada para tests
 ```
 
-### Limitaciones Identificadas
-- **Navegadores**: Solo Chrome habilitado por defecto (Firefox y Edge disponibles)
-- **Dependencias externas**: Requiere acceso a Figma y usuarios de prueba activos
-- **Tiempo de ejecución**: Tests completos requieren ~15-20 minutos
-- **Recursos**: Genera múltiples archivos de evidencia por ejecución

@@ -7,7 +7,7 @@ export default defineConfig({
 	retries: 1,
 	workers: 1,
 	outputDir: './evidence',
-	
+	timeout: 45_000,
 	reporter: [
 		['html', {
 			outputFolder: 'results',
@@ -16,32 +16,20 @@ export default defineConfig({
 	],
 	
 	use: {
-		trace: 'on',
-		// headless: false, //--- descomentar si se quiere ver la ejecucion en el navegador>
+		trace: 'on-first-retry',
+		headless: false, //--- comentar si NO se quiere ver la ejecucion en el navegador
 		screenshot: 'on',
 		video: 'on',
-		// Habilitar para que las pruebas se ejecuten mas lento
-		// launchOptions: {
-		// 	slowMo: 600,
-		// },
+		actionTimeout: 15_000,
+		launchOptions: {
+			slowMo: 800,
+		},
 	},
 
 	projects: [
 		{
 			name: 'chromium',
 			use: { ...devices['Desktop Chrome'] },
-		},
-		{
-			name: 'firefox',
-			use: { ...devices['Desktop Firefox'] },
-		},
-		// {
-		// 	name: 'edge',
-		// 	use: { ...devices['Desktop Edge'] },
-		// },
-		// {
-		// 	name: 'chrome',
-		// 	use: { ...devices['Desktop Chrome'] },
-		// }
+		}
 	]
 });

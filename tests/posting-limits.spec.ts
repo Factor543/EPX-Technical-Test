@@ -92,7 +92,6 @@ test.describe('Posting limits', () => {
 				'La descripción del límite excedido no se muestra, indicando posible ingreso al formulario cuando debería estar bloqueado'
 			).toBeVisible();
 
-			await posting.page.waitForTimeout(1500);
 			const screenshotPath = 'evidence/posting-limits-primer-post-gratuito-bloqueado.png';
 			await posting.page.screenshot({ path: screenshotPath});
 			test.info().attach('screenshot', {
@@ -226,7 +225,6 @@ test.describe('Posting limits', () => {
 		});
 
 		await test.step('Cerrar modal de upgrade', async () => {
-			await posting.page.waitForTimeout(1500);
 			const screenshotPath = 'evidence/posting-limits-modal-upgrade.png';
 			await posting.page.screenshot({ path: screenshotPath});
 			test.info().attach('screenshot', {
@@ -264,7 +262,6 @@ test.describe('Posting limits', () => {
 		await test.step('Validar ingreso al formulario de Get Expert Advice', async () => {
 			await posting.get_advice_access.click();
 
-			await posting.page.waitForTimeout(1500);
 			await expect(posting.Messages.free_listings_message,
 				'Aparece la Modal de upgrade a EPX + . Posible limite de get advice alcanzado.' 
 			).not.toBeVisible();

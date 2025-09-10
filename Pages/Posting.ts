@@ -207,7 +207,6 @@ export class Posting extends Locators {
 	}
 
 	private async selectEndTime() {
-		await this.page.waitForTimeout(800);
 		await this.form_event.end_time.click();
 		await this.form_event.time_now_button.waitFor({ state: 'visible' });
 		await this.form_event.time_now_button.click();
