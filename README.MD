@@ -10,7 +10,7 @@ Este proyecto implementa una suite de automatización de pruebas end-to-end para
    - Usuario 1: [cmendoza+qa1@shokworks.io]
    - Usuario 2: [cmendoza+qa2@shokworks.io] 
    - Usuario 3: [cmendoza+qa3@shokworks.io]
-   **Contrasñea unica para los 3 usuarios: Cmendoza1.**
+   - Contrasñea unica para los 3 usuarios: Cmendoza1.**
 
 2. **Reiniciar límites de publicación:**
    - Resetear contadores de posts gratuitos y de pago
