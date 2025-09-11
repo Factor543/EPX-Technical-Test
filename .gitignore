@@ -7,7 +7,5 @@ node_modules/
 /playwright/.cache/
 /results
 /evidence
-/resultsdocs/gitignore: se excluyen carpetas evidence/ y results/ para mejorar tiempos de clonación
-
-Se actualizó el archivo .gitignore y la documentación técnica para ignorar las carpetas evidence/ y results/, ya que su inclusión ralentizaba significativamente la clonación del repositorio. En producción, estos archivos no son necesarios y pueden ser generados localmente.
+/results
 
