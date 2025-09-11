@@ -15,15 +15,7 @@
 - Razón: Prácticidad y propósito de las pruebas
 - En producción se implementarían todos los navegadores y responsive design
 
-**3. RESULTADOS DE EJECUCIÓN - SUBIDOS AL REPOSITORIO INTENCIONALMENTE**
-- Los archivos de evidence/ y results/ están incluidos en el repositorio
-- Contiene videos, screenshots, traces y reportes HTML de las ejecuciones
-- Razón: Las referencias en este README apuntan a archivos internos de esas carpetas
-- No subirlos dañaría la documentación y redirecciones del proyecto
-- En producción estos archivos se excluirían en el archivo .gitignore del repositorio
-- *****Puede afectar el tiempo de clonación debido al tamaño de videos y metadatos*****
-
-**4. WAITFOR TIMEOUTS - COLOCADOS ESTRATÉGICAMENTE**
+**3. WAITFOR TIMEOUTS - COLOCADOS ESTRATÉGICAMENTE**
 - Se utilizan page.waitForTimeout() en puntos específicos del código
 - Razón: Controlar comportamientos asíncronos y dar tiempo a respuestas de IA
 - Necesarios para estabilizar tests en entornos de staging con latencia variable
@@ -69,11 +61,9 @@ Este proyecto implementa una suite de automatización de pruebas end-to-end para
 
 **Bug #1: Primer mensaje no responde**
 - C.A.R.L. no responde al primer mensaje tras nueva conversación
-- [Ver evidencias en carpeta](evidence/) - Buscar carpetas que contengan "AI-assistance"
 
 **Bug #2: JSON incompleto** 
 - C.A.R.L. omite llave de cierre en respuestas JSON
-- [Ver evidencias en carpeta](evidence/) - Buscar carpetas que contengan "AI-assistance"
 
 #### **Caso 2 – Posting Limits y Get Advice** COMPLETO
 [Detalles del análisis del caso Posting Limits](documentation/Posting-limits.md)
@@ -88,11 +78,9 @@ Este proyecto implementa una suite de automatización de pruebas end-to-end para
 
 **Bug #1: Sistema de límites no funciona**
 - Permite más posts gratuitos de los permitidos
-- [Ver evidencias en carpeta](evidence/) - Buscar carpetas que contengan "posting-limits"
 
 **Bug #2: Mensajes de error no aparecen**
 - No muestra mensajes de límite excedido cuando debería
-- [Ver evidencias en carpeta](evidence/) - Buscar carpetas que contengan "posting-limits"
 
 #### **Caso 3 – Comparación Visual (Figma vs Plataforma)** COMPLETO
 [Detalles del análisis del caso Visual](documentation/visual.md)
@@ -131,7 +119,6 @@ npm run lint
 
 ### Reportes y Evidencias
 - **Reporte HTML**: Incluye videos de ejecución, capturas de pantalla automáticas y traces detallados
-- **Evidencias**: Screenshots y videos guardados automáticamente en carpeta `evidence/`
 - **Traces**: Información detallada de cada paso de ejecución
 
 ### Arquitectura del Proyecto
@@ -159,13 +146,6 @@ npm run lint
 │   ├── AI-assistance.md     # Análisis del caso C.A.R.L.
 │   ├── Posting-limits.md    # Análisis del caso Posting Limits
 │   └── visual.md            # Análisis del caso Visual
-├── evidence/               # carpetas de Evidencias de ejecución
-│   ├── AI-assistance-*/     # Evidencias de tests de C.A.R.L.
-│   ├── posting-limits-*/    # Evidencias de tests de Posting Limits
-│   └── *.png               # Screenshots de errores
-├── results/                # carpetas de Reportes HTML
-│   ├── index.html          # Reporte principal
-│   └── data/               # Datos de reportes
 ├── assets/                 # carpetas de Recursos de prueba
 │   ├── figma/              # Diseños de referencia
 │   ├── screenshots/        # Capturas de producción
